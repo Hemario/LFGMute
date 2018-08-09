@@ -1,5 +1,5 @@
-## Interface: 71000
-## Version: 7.1.5.1
+## Interface: 80000
+## Version: 8.0.0.1
 ## Title: LFGMute
 ## Notes: Mute the annoying pinging sound
 ## Author: Hemar
