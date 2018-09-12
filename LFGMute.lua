@@ -2,6 +2,8 @@ local LFGMuteAddon = LibStub("AceAddon-3.0"):NewAddon("LFGMute")
 LFGMuteAddon.ADDON_NAME = "LFGMute"
 LFGMuteAddon.VERSION = GetAddOnMetadata("LFGMute", "Version")
 
+local SOUNDKIT = SOUNDKIT
+
 local defaults = {
 	global = {
 		playOnce = true,
@@ -25,7 +27,8 @@ function LFGMuteAddon:GetConfigOptionsTable()
 		order = 1,
 		args = {
 			playOnce = {
-				order = 1,
+				desc = "Play the ping sound only once.",
+                order = 1,
 				type = "toggle",
 				name = "PlayOnce",
 				set = 	function(info, val)
@@ -35,6 +38,7 @@ function LFGMuteAddon:GetConfigOptionsTable()
 				get = function() return self.db.global.playOnce end
 			},
 			playLoop = {
+                desc = "Play the ping sound repeatedly.",
 				order = 2,
 				type = "toggle",
 				name = "PlayLoop",
@@ -52,7 +56,7 @@ function LFGMuteAddon:ApplySounds()
 	local playOnce = self.db.global.playOnce or self.db.global.playLoop
 	local playLoop = self.db.global.playLoop
 	
-	local playSound = function() PlaySound("UI_GroupFinderReceiveApplication") end
+	local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION) end
 	
 	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", playOnce and playSound or nil)	
 	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", playLoop and playSound or nil)		
