@@ -21,35 +21,35 @@ function LFGMuteAddon:OnInitialize()
 end
 
 function LFGMuteAddon:GetConfigOptionsTable()
-	return {
-		name = "Options",
-		type = "group",
-		order = 1,
-		args = {
-			playOnce = {
-				desc = "Play the ping sound only once.",
+    return {
+        name = "Options",
+        type = "group",
+        order = 1,
+        args = {
+            playOnce = {
+                desc = "Play the ping sound only once.",
                 order = 1,
-				type = "toggle",
-				name = "PlayOnce",
-				set = 	function(info, val)
-							self.db.global.playOnce = val
-							LFGMuteAddon:ApplySounds()
-						end,
-				get = function() return self.db.global.playOnce end
-			},
-			playLoop = {
+                type = "toggle",
+                name = "PlayOnce",
+                set = function(info, val)
+                    self.db.global.playOnce = val
+                    LFGMuteAddon:ApplySounds()
+                end,
+                get = function() return self.db.global.playOnce end
+            },
+            playLoop = {
                 desc = "Play the ping sound repeatedly.",
                 order = 2,
-				type = "toggle",
-				name = "PlayLoop",
-				set = 	function(info, val)
-							self.db.global.playLoop = val
-							LFGMuteAddon:ApplySounds()
-						end,
-				get = function() return self.db.global.playLoop end
-			}
-		}
-	}
+                type = "toggle",
+                name = "PlayLoop",
+                set = function(info, val)
+                        self.db.global.playLoop = val
+                        LFGMuteAddon:ApplySounds()
+                end,
+                get = function() return self.db.global.playLoop end
+            }
+        }
+    }
 end
 
 function LFGMuteAddon:ApplySounds()
