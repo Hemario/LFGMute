@@ -39,7 +39,7 @@ function LFGMuteAddon:GetConfigOptionsTable()
 			},
 			playLoop = {
                 desc = "Play the ping sound repeatedly.",
-				order = 2,
+                order = 2,
 				type = "toggle",
 				name = "PlayLoop",
 				set = 	function(info, val)
