@@ -56,7 +56,7 @@ function LFGMuteAddon:ApplySounds()
 	local playOnce = self.db.global.playOnce or self.db.global.playLoop
 	local playLoop = self.db.global.playLoop
 	
-	local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION) end
+	local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
 	
 	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", playOnce and playSound or nil)	
 	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", playLoop and playSound or nil)		
