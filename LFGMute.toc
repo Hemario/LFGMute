@@ -1,8 +1,8 @@
-## Interface: 80000
-## Version: 8.0.1.3
+## Interface: 90002
+## Version: 9.0.2.4
 ## Title: LFGMute
 ## Notes: Mute the annoying pinging sound
-## Author: Hemar
+## Author: Hemario
 ## SavedVariables: LFGMuteDB
 embeds.xml
 LFGMute.lua
