@@ -6,7 +6,7 @@ local inCombat = UnitAffectingCombat("player")
 local combatFrame = CreateFrame("Frame")
 combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-combatFrame:SetScript("OnEvent", function(self, event) print(event) inCombat = (event=="PLAYER_REGEN_DISABLED") LFGMuteAddon:ApplySounds() end)
+combatFrame:SetScript("OnEvent", function(self, event) inCombat = (event=="PLAYER_REGEN_DISABLED") LFGMuteAddon:ApplySounds() end)
 
 local SOUNDKIT = SOUNDKIT
 
