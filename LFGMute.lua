@@ -47,7 +47,18 @@ function LFGMuteAddon:GetConfigOptionsTable()
                         LFGMuteAddon:ApplySounds()
                 end,
                 get = function() return self.db.global.playLoop end
-            }
+            },
+			outOfcombatOnly = {
+				desc = "Play the ping sound only while out of Combat",
+                order = 3,
+                type = "toggle",
+                name = "OutOfCombatOnly",
+                set = function(info, val)
+                    self.db.global.outOfcombatOnly = val
+                    LFGMuteAddon:ApplySounds()
+                end,
+                get = function() return self.db.global.outOfcombatOnly end
+			}
         }
     }
 end
@@ -55,9 +66,10 @@ end
 function LFGMuteAddon:ApplySounds()
 	local playOnce = self.db.global.playOnce or self.db.global.playLoop
 	local playLoop = self.db.global.playLoop
+	local outOfcombatOnly = self.db.global.outOfcombatOnly
 	
 	local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
 	
-	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", playOnce and playSound or nil)	
-	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", playLoop and playSound or nil)		
+	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", ((outOfCombatOnly and not InCombatLockdown()) or not outOfCombatOnly) and playOnce and playSound or nil)	
+	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", ((outOfCombatOnly and not InCombatLockdown()) or not outOfCombatOnly) and playLoop and playSound or nil)		
 end
