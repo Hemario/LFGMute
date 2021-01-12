@@ -10,20 +10,20 @@ combatFrame:SetScript("OnEvent", function(self, event) LFGMuteAddon:ApplySounds(
 local SOUNDKIT = SOUNDKIT
 
 local defaults = {
-	global = {
-		playOnce = true,
-		playLoop = false,
-		outOfcombatOnly = false,
-	}
+    global = {
+        playOnce = true,
+        playLoop = false,
+        outOfcombatOnly = false,
+    }
 }
 
 function LFGMuteAddon:OnInitialize()
-	self.db = LibStub("AceDB-3.0"):New("LFGMuteDB", defaults)
-	
-	LibStub("AceConfig-3.0"):RegisterOptionsTable(LFGMuteAddon.ADDON_NAME, function() return LFGMuteAddon:GetConfigOptionsTable() end)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions(LFGMuteAddon.ADDON_NAME)
-	
-	LFGMuteAddon:ApplySounds()
+    self.db = LibStub("AceDB-3.0"):New("LFGMuteDB", defaults)
+    
+    LibStub("AceConfig-3.0"):RegisterOptionsTable(LFGMuteAddon.ADDON_NAME, function() return LFGMuteAddon:GetConfigOptionsTable() end)
+    LibStub("AceConfigDialog-3.0"):AddToBlizOptions(LFGMuteAddon.ADDON_NAME)
+    
+    LFGMuteAddon:ApplySounds()
 end
 
 function LFGMuteAddon:GetConfigOptionsTable()
@@ -54,8 +54,8 @@ function LFGMuteAddon:GetConfigOptionsTable()
                 end,
                 get = function() return self.db.global.playLoop end
             },
-			outOfcombatOnly = {
-				desc = "Play the ping sound only while out of Combat",
+            outOfcombatOnly = {
+                desc = "Play the ping sound only while out of Combat",
                 order = 3,
                 type = "toggle",
                 name = "Out Of Combat Only",
@@ -64,7 +64,7 @@ function LFGMuteAddon:GetConfigOptionsTable()
                     LFGMuteAddon:ApplySounds()
                 end,
                 get = function() return self.db.global.outOfcombatOnly end
-			}
+            }
         }
     }
 end
