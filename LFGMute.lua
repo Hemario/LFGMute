@@ -2,11 +2,10 @@ local LFGMuteAddon = LibStub("AceAddon-3.0"):NewAddon("LFGMute")
 LFGMuteAddon.ADDON_NAME = "LFGMute"
 LFGMuteAddon.VERSION = GetAddOnMetadata("LFGMute", "Version")
 
-local inCombat = UnitAffectingCombat("player")
 local combatFrame = CreateFrame("Frame")
 combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-combatFrame:SetScript("OnEvent", function(self, event) inCombat = (event=="PLAYER_REGEN_DISABLED") LFGMuteAddon:ApplySounds() end)
+combatFrame:SetScript("OnEvent", function(self, event) LFGMuteAddon:ApplySounds() end)
 
 local SOUNDKIT = SOUNDKIT
 
@@ -71,16 +70,13 @@ function LFGMuteAddon:GetConfigOptionsTable()
 end
 
 function LFGMuteAddon:ApplySounds()
-	local playOnce = self.db.global.playOnce or self.db.global.playLoop
-	local playLoop = self.db.global.playLoop
-	
-	local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
-	
-	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", LFGMuteAddon:CheckCombatStatus() and playOnce and playSound or nil)	
-	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", LFGMuteAddon:CheckCombatStatus() and playLoop and playSound or nil)		
+    local playOnce = self.db.global.playOnce or self.db.global.playLoop
+    local playLoop = self.db.global.playLoop
+    local combatCheck = not self.db.global.outOfcombatOnly or not UnitAffectingCombat("player")
+    
+    local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
+    
+    QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", combatCheck and playOnce and playSound or nil)
+    QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", combatCheck and playLoop and playSound or nil)
 end
 
-function LFGMuteAddon:CheckCombatStatus()
-	local outOfCombatOnly = self.db.global.outOfcombatOnly 
-	return not outOfCombatOnly or (outOfCombatOnly and not inCombat)
-end
