@@ -2,12 +2,19 @@ local LFGMuteAddon = LibStub("AceAddon-3.0"):NewAddon("LFGMute")
 LFGMuteAddon.ADDON_NAME = "LFGMute"
 LFGMuteAddon.VERSION = GetAddOnMetadata("LFGMute", "Version")
 
+local inCombat = UnitAffectingCombat("player")
+local combatFrame = CreateFrame("Frame")
+combatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+combatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+combatFrame:SetScript("OnEvent", function(self, event) inCombat = (event=="PLAYER_REGEN_DISABLED") LFGMuteAddon:ApplySounds() end)
+
 local SOUNDKIT = SOUNDKIT
 
 local defaults = {
 	global = {
 		playOnce = true,
 		playLoop = false,
+		outOfcombatOnly = false,
 	}
 }
 
@@ -30,7 +37,7 @@ function LFGMuteAddon:GetConfigOptionsTable()
                 desc = "Play the ping sound only once.",
                 order = 1,
                 type = "toggle",
-                name = "PlayOnce",
+                name = "Play Once",
                 set = function(info, val)
                     self.db.global.playOnce = val
                     LFGMuteAddon:ApplySounds()
@@ -41,13 +48,24 @@ function LFGMuteAddon:GetConfigOptionsTable()
                 desc = "Play the ping sound repeatedly.",
                 order = 2,
                 type = "toggle",
-                name = "PlayLoop",
+                name = "Play Loop",
                 set = function(info, val)
                         self.db.global.playLoop = val
                         LFGMuteAddon:ApplySounds()
                 end,
                 get = function() return self.db.global.playLoop end
-            }
+            },
+			outOfcombatOnly = {
+				desc = "Play the ping sound only while out of Combat",
+                order = 3,
+                type = "toggle",
+                name = "Out Of Combat Only",
+                set = function(info, val)
+                    self.db.global.outOfcombatOnly = val
+                    LFGMuteAddon:ApplySounds()
+                end,
+                get = function() return self.db.global.outOfcombatOnly end
+			}
         }
     }
 end
@@ -58,6 +76,11 @@ function LFGMuteAddon:ApplySounds()
 	
 	local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
 	
-	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", playOnce and playSound or nil)	
-	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", playLoop and playSound or nil)		
+	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", LFGMuteAddon:CheckCombatStatus() and playOnce and playSound or nil)	
+	QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", LFGMuteAddon:CheckCombatStatus() and playLoop and playSound or nil)		
+end
+
+function LFGMuteAddon:CheckCombatStatus()
+	local outOfCombatOnly = self.db.global.outOfcombatOnly 
+	return not outOfCombatOnly or (outOfCombatOnly and not inCombat)
 end
