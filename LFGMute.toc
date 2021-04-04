@@ -1,5 +1,5 @@
-## Interface: 90002
-## Version: 9.0.2.5
+## Interface: 90005
+## Version: 9.0.5.6
 ## Title: LFGMute
 ## Notes: Mute the annoying pinging sound
 ## Author: Hemario
