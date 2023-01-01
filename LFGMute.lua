@@ -76,7 +76,7 @@ function LFGMuteAddon:ApplySounds()
     
     local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
     
-    QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnPlay", combatCheck and playOnce and playSound or nil)
-    QueueStatusMinimapButton.EyeHighlightAnim:SetScript("OnLoop", combatCheck and playLoop and playSound or nil)
+    QueueStatusButton.EyeHighlightAnim:SetScript("OnPlay", combatCheck and playOnce and playSound or nil)
+    QueueStatusButton.EyeHighlightAnim:SetScript("OnLoop", combatCheck and playLoop and playSound or nil)
 end
 
