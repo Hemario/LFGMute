@@ -1,3 +1,4 @@
+local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
 local LFGMuteAddon = LibStub("AceAddon-3.0"):NewAddon("LFGMute")
 LFGMuteAddon.ADDON_NAME = "LFGMute"
 LFGMuteAddon.VERSION = GetAddOnMetadata("LFGMute", "Version")
