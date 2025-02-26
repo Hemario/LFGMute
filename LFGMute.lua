@@ -75,7 +75,10 @@ function LFGMuteAddon:ApplySounds()
     local playLoop = self.db.global.playLoop
     local combatCheck = not self.db.global.outOfcombatOnly or not UnitAffectingCombat("player")
     
-    local playSound = function() PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master") end
+    local playSound = function() 
+		willPlay, soundHandle = PlaySound(SOUNDKIT.UI_GROUP_FINDER_RECEIVE_APPLICATION, "master")
+		--print("PlaySound", GetTime(), willPlay, soundHandle)
+	end
     
     QueueStatusButton.EyeHighlightAnim:SetScript("OnPlay", combatCheck and playOnce and playSound or nil)
     QueueStatusButton.EyeHighlightAnim:SetScript("OnLoop", combatCheck and playLoop and playSound or nil)
